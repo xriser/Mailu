@@ -29,8 +29,8 @@ RUN apk add --no-cache \
 
 COPY --from=builder /usr/lib/dovecot/lib21_fts_xapian_plugin.* /usr/lib/dovecot/
 
-COPY conf /conf
-COPY start.py /start.py
+COPY core/dovecot/conf /conf
+COPY core/dovecot/start.py /start.py
 
 EXPOSE 110/tcp 143/tcp 993/tcp 4190/tcp 2525/tcp
 VOLUME ["/mail"]
