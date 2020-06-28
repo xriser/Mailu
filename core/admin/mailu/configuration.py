@@ -92,13 +92,13 @@ class ConfigManager(dict):
         return system.resolve_address(self.config['HOST_{}'.format(name)])
 
     def resolve_hosts(self):
-        self.config["IMAP_ADDRESS"] = self.get_host_address("IMAP")
-        self.config["POP3_ADDRESS"] = self.get_host_address("POP3")
-        self.config["AUTHSMTP_ADDRESS"] = self.get_host_address("AUTHSMTP")
-        self.config["SMTP_ADDRESS"] = self.get_host_address("SMTP")
-        self.config["REDIS_ADDRESS"] = self.get_host_address("REDIS")
+        self.config["IMAP_ADDRESS"] = os.getenv("IMAP_ADDRESS", default="imap")
+        self.config["POP3_ADDRESS"] = os.getenv("POP3_ADDRESS", default="imap")
+        self.config["AUTHSMTP_ADDRESS"] = os.getenv("AUTHSMTP_ADDRESS", default="smtp")
+        self.config["SMTP_ADDRESS"] = os.getenv("SMTP_ADDRESS", default="smtp")
+        self.config["REDIS_ADDRESS"] = os.getenv("REDIS_ADDRESS", default="redis")
         if self.config["WEBMAIL"] != "none":
-            self.config["WEBMAIL_ADDRESS"] = self.get_host_address("WEBMAIL")
+            self.config["WEBMAIL_ADDRESS"] = os.getenv("WEBMAIL_ADDRESS", default="webmail")
 
     def __coerce_value(self, value):
         if isinstance(value, str) and value.lower() in ('true','yes'):

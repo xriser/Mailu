@@ -4,11 +4,11 @@ ARG ARCH=""
 FROM ${ARCH}node:8 as assets
 COPY --from=balenalib/rpi-alpine:3.10 /usr/bin/qemu-arm-static /usr/bin/qemu-arm-static
 
-COPY package.json ./
+COPY core/admin/package.json ./
 RUN npm install
 
-COPY ./webpack.config.js ./
-COPY ./assets ./assets
+COPY core/admin/webpack.config.js ./
+COPY core/admin/assets ./assets
 RUN mkdir static \
  && ./node_modules/.bin/webpack-cli
 
@@ -23,7 +23,7 @@ RUN apk add --no-cache \
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY requirements-prod.txt requirements.txt
+COPY core/admin/requirements-prod.txt requirements.txt
 RUN apk add --no-cache libressl curl postgresql-libs mariadb-connector-c \
   && apk add --no-cache --virtual build-dep \
   libressl-dev libffi-dev python3-dev build-base postgresql-dev mariadb-connector-c-dev \
@@ -31,9 +31,9 @@ RUN apk add --no-cache libressl curl postgresql-libs mariadb-connector-c \
   && apk del --no-cache build-dep
 
 COPY --from=assets static ./mailu/ui/static
-COPY mailu ./mailu
-COPY migrations ./migrations
-COPY start.py /start.py
+COPY core/admin/mailu ./mailu
+COPY core/admin/migrations ./migrations
+COPY core/admin/start.py /start.py
 
 RUN pybabel compile -d mailu/translations
 
