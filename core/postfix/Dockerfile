@@ -14,8 +14,8 @@ RUN pip3 install "podop>0.2.5"
 # Image specific layers under this line
 RUN apk add --no-cache postfix postfix-pcre cyrus-sasl-plain
 
-COPY conf /conf
-COPY start.py /start.py
+COPY core/postfix/conf /conf
+COPY core/postfix/start.py /start.py
 
 EXPOSE 25/tcp 10025/tcp
 VOLUME ["/queue"]

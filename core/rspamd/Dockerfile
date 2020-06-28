@@ -13,8 +13,8 @@ RUN apk add --no-cache rspamd rspamd-controller rspamd-proxy rspamd-fuzzy ca-cer
 
 RUN mkdir /run/rspamd
 
-COPY conf/ /conf
-COPY start.py /start.py
+COPY core/rspamd/conf/ /conf
+COPY core/rspamd/start.py /start.py
 
 EXPOSE 11332/tcp 11334/tcp 11335/tcp
 
